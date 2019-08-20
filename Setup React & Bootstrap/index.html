@@ -4,57 +4,205 @@
 	<script src="js/react.js"></script>
 	<script src="js/react-dom.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
-
-	<link rel="stylesheet" href="css/bootstrap.css">
+  
+  <link rel="stylesheet" href="css/bootstrap.css">
+  
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div id="app"></div>
 
-	<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">My Website</a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">About</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+
+	<script type="text/babel">
+    //NavBar component 
+    let NavBar = React.createClass({
+
+      propTypes: {
+        brand: React.PropTypes.string,
+        isDark: React.PropTypes.bool,
+      },
+
+      getDefaultProps: function() {
+        return {
+          brand: 'React without create-react-app',
+          isDark: false,
+          page: 'home',
+        }
+      },
 
 
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-      </div>
-    </div>
+      render: function(){
+        return(
+          
+            	<nav className={`navbar ${this.props.isDark ?  "navbar-inverse" : "navbar-default"}`}>
+              <div className="container-fluid">
+                <div className="navbar-header">
+                  <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" 
+                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span className="sr-only">Toggle navigation</span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                  </button>
+                  <a className="navbar-brand" href="#">{this.props.brand}</a>
+                </div>
+                <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul className="nav navbar-nav">
+                    <li><a href="#" className={this.props.page == 'home' ?'active' : ''} 
+                      name="home" onClick={this.props.handleClick}>Home </a></li>
+                    <li><a href="#" className={this.props.page == 'learn' ? 'active' : ''} 
+                      name="learn" onClick={this.props.handleClick}>Learn React</a></li>
+                    <li><a href="#" className={this.props.page == 'about' ? 'active' : ''} 
+                      name="about" onClick={this.props.handleClick}>About</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+         
+        )
+      }
+    });
 
-    <div class="container">
-    
-      <div class="row">
-   		Main Content
-      </div>
+    //Jumbotrone component
+    let Jumbotrone = React.createClass({
+      propTypes:{
+        name: React.PropTypes.string.isRequired,
+        content: React.PropTypes.string,
+        linkText: React.PropTypes.string,
+      },
+      getDefaultProps: function() {
+        return{
+          content: "Small batch street art butcher narwhal put a bird on it. Yuccie tousled offal, four dollar toast vape palo santo fixie church-key. Deep v tumblr listicle green juice four dollar toast palo santo banh mi knausgaard kogi roof party sustainable. La croix letterpress vape jianbing hot chicken. Salvia kale chips deep v hoodie fingerstache, chicharrones thundercats hot chicken.",
+          linkText: "Learn More",
+        }
+      },
 
-      <hr>
+      render: function() {
+        return(
+          <div className="jumbotron">
+            <div className="container">
+              <h1>Hello, {this.props.name || "Stranger"}!</h1>
+              <p>{this.props.content}</p>
+              <p><a className="btn btn-primary btn-lg" href="#" role="button">{this.props.linkText} &raquo;</a></p>
+            </div>
+          </div>
+        )
+      }
+    });
 
-      <footer>
-        <p>&copy; 2015 MyWebsite, Inc.</p>
-      </footer>
-    </div> <!-- /container -->
+    //HomePage component
+    let Page = React.createClass({
+      showLearn: function() {
+        return (
+          <div className="row">
+          What Are We Building?
+          In this tutorial, we’ll show how to build an interactive tic-tac-toe game with React.
 
-	<script>
+          You can see what we’ll be building here: Final Result. If the code doesn’t make sense to you, or if you are unfamiliar with the code’s syntax, don’t worry! The goal of this tutorial is to help you understand React and its syntax.
 
+          We recommend that you check out the tic-tac-toe game before continuing with the tutorial. One of the features that you’ll notice is that there is a numbered list to the right of the game’s board. This list gives you a history of all of the moves that have occurred in the game, and is updated as the game progresses.
+
+          You can close the tic-tac-toe game once you’re familiar with it. We’ll be starting from a simpler template in this tutorial. Our next step is to set you up so that you can start building the game.
+          </div>
+        )
+      },
+      showAbout: function() {
+        return (
+          <div className="row">
+          <div className="col-md-4">
+             <h3> Declarative </h3>
+            React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.
+
+            Declarative views make your code more predictable and easier to debug.. Our next step is to set you up so that you can start building the game.
+          </div>
+          <div className="col-md-4">
+              <h3> Declarative </h3>
+              React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.
+
+              Declarative views make your code more predictable and easier to debug.. Our next step is to set you up so that you can start building the game.
+          </div>
+          <div className="col-md-4">
+              <h3> Declarative </h3>
+              React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.
+
+              Declarative views make your code more predictable and easier to debug.. Our next step is to set you up so that you can start building the game.
+          </div>
+          </div>
+        )
+      },
+
+      render: function() {
+        return(
+          <div className="container">
+            
+              {this.props.learn && this.showLearn()}
+              {this.props.about && this.showAbout()}
+            
+          </div>
+        )
+      }
+    });
+
+    //Footer component
+    let Footer = React.createClass({
+      getDefaultProps: function() {
+        return {
+          content: `What an interesting way to do React, amiright?`,
+          copy_year: 2019,
+        }
+      },
+
+      render: function() {
+        return(
+          <div className="container">
+            <div className="row">
+            <footer>
+                <p>&copy;{this.props.copy_year} {this.props.content} </p>
+            </footer>
+            </div>
+          </div>
+        )
+      }
+    });
+
+
+    //Main app
+    let App = React.createClass({
+      getInitialState: function() {
+        return{
+          page: "home",
+        }
+      },
+
+      handleClick: function(e) {
+        this.setState({
+          page: e.target.name,
+        })
+      },
+
+      render: function() {
+        return(
+          <div>
+            <NavBar 
+            isDark 
+            handleClick={this.handleClick}
+            page={this.state.page}
+            />
+            {this.state.page == 'home' && 
+            <Jumbotrone name="Jimmy"/>
+             }
+             {this.state.page == 'about' && <Page about/>}
+             {this.state.page == 'learn' && <Page learn/>}
+            <Footer />
+            </div>
+        )
+      }
+    });
+
+    ReactDOM.render(
+      <App />, 
+      document.getElementById('app')
+    );
 	</script>
 </body>
 </html>
